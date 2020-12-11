@@ -1,0 +1,256 @@
+@font-face {
+    font-family: 'langar';
+    src: url('/assets/langar.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#logo {
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    background-color: rgb(66, 170, 255);
+    text-align: center;
+    font-size: 22px;
+    font-family: Langar;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.section {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.section .item {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: top;
+    margin: 20px;
+}
+
+#expenses-section .item {
+    padding: 20px;
+    background-color: yellow;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    cursor: move;
+}
+
+#expenses-section .item .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#expenses-section.section .item .subtitle {
+    font-size: 14px;
+}
+
+#expenses-section.section .item .subsubtitle {
+    font-size: 12px;
+}
+
+#buckets-section.section .item {
+    background-color: #423321;
+    padding: 20px 40px;
+    color: white;
+}
+
+#buckets-section.section .item::after {
+    content: ' ';
+    position: absolute;
+    width: 20px;
+    right: -20px;
+    top: 0;
+    height: 100%;
+    transform: skewY(-45deg);
+    background-color: #463520;
+    transform-origin: top left;
+}
+
+#buckets-section.section .item::before {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    left: 0;
+    height: 20px;
+    transform: skewX(-45deg);
+    background-color: #161008;
+    transform-origin: bottom right;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+#buckets-section.section .item.filled::before {
+    background: radial-gradient(circle, rgba(255,255,0,1) 0%, rgba(22,16,8,1) 100%);
+}
+
+#buckets-section.section .item .subtitle {
+    font-size: 14px;
+}
+
+.over {
+    color: red;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.alpha {
+    opacity: 0.5;
+}
+
+.modal, .dying-modal {
+    display: block;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%)translateX(-50%);
+    left: 50%;
+    background-color: #161008;
+    opacity: 0;
+    transition: opacity 0.5s;
+    max-height: 80%;
+    overflow: auto;
+    max-width: 100vw;
+    box-sizing: border-box;
+    z-index: 1000;
+    color: white;
+}
+
+.modal > div, .dying-modal > div {
+    padding: 20px;
+}
+
+.modal > div::after, .dying-modal > div::after {
+    clear: both;
+    content: " ";
+    display: block;
+}
+
+.modal h2, .dying-modal h2 {
+    margin-top: 0;
+}
+
+.modal-shown, .dying-modal .modal-shown {
+    opacity: 1;
+}
+
+footer {
+    margin-top: 40px;
+}
+
+#bucket-modal ul {
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+#bucket-modal li {
+    font-size: 14px;
+}
+
+#bucket-modal li::before {
+    content: ' ';
+    background-color: yellow;
+    height: 14px;
+    width:14px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #cac7b1;
+    border: 3px dashed red;
+    padding: 5px 20px;
+    font-family: 'langar';
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color:#afac9a;
+}
+
+.toast {
+    position: absolute;
+    z-index: 1001;
+    top: 10%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.toast-shown {
+    opacity: 1;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+label > span {
+    width: 75px;
+    text-align: right;
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+label > input {
+    background-color: #cac7b1;
+    color: black;
+    padding: 10px;
+    border: 0;
+    font-family: Langar;
+    font-size: 16px;
+}
+
+.modal button, .dying-modal button {
+    margin-top: 10px;
+    float: right;
+    margin-left: 10px;
+}
+
+#delete-button {
+    float: left;
+    margin-right: 40px;
+    margin-left: 0 !important;
+}
+
+.modal button.remove-button, .dying-modal button.remove-button {
+    padding: 0;
+    font-size: 12px;
+    float: none;
+    border: 2px dashed red;
+    width: 24px;
+    height: 24px;
+}
+
+#totals-section.over {
+    color: rgb(151, 0, 0);
+}

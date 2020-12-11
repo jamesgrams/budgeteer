@@ -4,7 +4,7 @@
 
 ## About
 
-Budgeteer is a pirate-themed budgeting program designed to be run on your local network. It display's expenses from your checking account as Dubloons that can be put into customizable buckets (chests). The software will allow you to track how much you have spent on each bucket and overall. Currently, it works with expenses for the current month - i.e. lets you keep a monthly budget. This software will scrape expenses from a TD Bank checking account.
+Budgeteer is a pirate-themed budgeting program designed to be run on your local network. It displays expenses from your checking account as Doubloons that can be put into customizable buckets (chests). The software will allow you to track how much you have spent on each bucket and overall. Currently, it works with expenses for the current month - i.e. lets you keep a monthly budget. This software will scrape expenses from a TD Bank checking account.
 
 ## Setup
 
@@ -15,3 +15,4 @@ Budgeteer is a pirate-themed budgeting program designed to be run on your local 
 4. Run `npm start`.
 5. On the first time running, you may have to enter a code from a text message you receive for security, so keep an eye out for console prompts.
 6. Optionally setup your computer up to run this program on startup and save the environment variables permanently.
+7. Access the program by going to the computer you set it up on's IP and port 8001 (e.g. http://192.168.1.44:8001). You can drag the Doubloons into the chests, and click a chest to see and edits details.

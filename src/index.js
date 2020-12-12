@@ -23,7 +23,7 @@ const INTERVAL_TIME = 1000 * 60 * 30; // updates every 30 minutes
 const TD_BANK_URL = "https://onlinebanking.tdbank.com/#/authentication/login";
 const USERNAME = process.env.BUDGETEER_USERNAME;
 const PASSWORD = process.env.BUDGETEER_PASSWORD;
-const USER_AGENT = process.env.USER_AGENT;
+const USER_AGENT = process.env.USER_AGENT || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36";
 const MONTH_KEY_SEPERATOR = "--";
 const HTTP_SEMANTIC_ERROR = 422;
 const HTTP_OK = 200;
@@ -184,6 +184,7 @@ async function fetchExpenses() {
     console.log("clicked login");
     try {
         await page.waitForSelector("button[ng-click=\"submitFunction('SMS')\"]", {timeout: 5000}); // click this
+        await page.waitForTimeout(4000);
         await page.click("button[ng-click=\"submitFunction('SMS')\"]");
         await page.waitForSelector("input[name='challengeCode']");
         let promise = new Promise((resolve, reject) => { // get their text code
@@ -192,7 +193,7 @@ async function fetchExpenses() {
                 input: process.stdin,
                 output: process.stdout
             })
-            rl.question("What is the code texted to you?", (answer) => {
+            rl.question("What is the code texted to you? ", (answer) => {
                 rl.close();
                 resolve(answer);
             });
@@ -201,6 +202,7 @@ async function fetchExpenses() {
         let challengeCode = await promise;
         await page.type("input[name='challengeCode']", challengeCode);
         await page.keyboard.press("Enter"); // submit
+        await page.waitForSelector('[ng-click="selectAccount(account)"]');
     }
     catch(err) {
         // ok - already verified

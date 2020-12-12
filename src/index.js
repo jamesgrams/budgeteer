@@ -157,6 +157,7 @@ app.listen(PORT);
 async function mainLoop() {
     try {
         checkNewMonth(); // Important this is first
+        writeDatabase();
         await fetchExpenses();
     }
     catch(err) {
@@ -240,15 +241,17 @@ async function fetchExpenses() {
             let columns = row.querySelectorAll("td");
             let amount = columns[4].innerText;
             let date = columns[1].innerText;
+            let status = columns[5].innerText;
             let matchDate = date.split("/")[0] + MONTH_KEY_SEPERATOR + date.split("/")[2];
             // an expense not a credit
-            if( amount.match("-") && matchDate === monthKey ) {
+            // can't do pending because sometimes the hash will change due to description being more specific
+            if( amount.match("-") && matchDate === monthKey && status !== "Pending" ) {
                 expenses.push( {
                     "date": date,
                     "type": columns[2].innerText,
                     "description": columns[3].innerText,
-                    "amount": parseFloat(amount.replace("-$","")),
-                    "status": columns[5].innerText,
+                    "amount": parseFloat(amount.replace(/[-\$,]/g,"")),
+                    "status": status,
                     "bucket": null
                 } );
             }

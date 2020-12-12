@@ -77,7 +77,6 @@ function createTotalsSection() {
 
     for( let expense in expensesDict ) {
         totalExpenses += expensesDict[expense].amount;
-        console.log(expense.amount)
     }
     for( let bucket in bucketsDict ) {
         totalBudget += bucketsDict[bucket].budget;
@@ -115,7 +114,7 @@ function createBucketsSection() {
         }
         item.ondrop = (e) => {
             if( e ) e.stopPropagation();
-            let expense = e.dataTransfer.getData('text/html');
+            let expense = e.dataTransfer.getData('text');
             assignExpense( expense, bucket );
             return false;
         };
@@ -203,8 +202,8 @@ function createBucketModal(bucket) {
     let expenseList = document.createElement("ul");
     let bucketExpenses = getExpensesForBucket(bucket);
     let keysInOrder = Object.keys(bucketExpenses).sort( (a,b) => {
-        a = expensesDict[a].date;
-        b = expensesDict[b].date;
+        a = new Date(expensesDict[a].date);
+        b = new Date(expensesDict[b].date);
         if( a > b ) return -1;
         if( b < a ) return 1;
         return 0;
@@ -275,8 +274,8 @@ function createExpensesSection() {
     section.setAttribute("id", "expenses-section");
 
     let keysInOrder = Object.keys(expensesDict).sort( (a,b) => {
-        a = expensesDict[a].date;
-        b = expensesDict[b].date;
+        a = new Date(expensesDict[a].date);
+        b = new Date(expensesDict[b].date);
         if( a > b ) return -1;
         if( b < a ) return 1;
         return 0;
@@ -288,7 +287,7 @@ function createExpensesSection() {
             item.ondragstart = (e) => {
                 item.classList.add("alpha");
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData("text/html", expense);
+                e.dataTransfer.setData("text", expense);
             }
             item.ondragend = () => {
                 item.classList.remove("alpha");

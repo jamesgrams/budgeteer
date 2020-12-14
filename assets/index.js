@@ -10,6 +10,7 @@ function load() {
     setLoadingMain();
     draw();
     document.querySelector("#add-bucket").onclick = displayAddBucket;
+    document.querySelector("#enter-code").onclick = displayEnterCode;
 }
 
 /**
@@ -394,6 +395,30 @@ function displayAddBucket(e) {
 }
 
 /**
+ * Display enter code.
+ * @param {Event} e - The event to open the modal.
+ */
+function displayEnterCode(e) {
+    let form = document.createElement("div");
+    form.setAttribute("id", "enter-code-modal");
+
+    let title = document.createElement("h2");
+    title.innerText = "Enter a Code";
+    form.appendChild(title);
+
+    form.appendChild(createInput("code", "Code: ", "text"));
+
+    let button = document.createElement("button");
+    button.innerText = "Send";
+    button.onclick = () => {
+        enterCode(form.querySelector("#code").value);
+    };
+    form.appendChild(button);
+
+    launchModal(e, form);
+}
+
+/**
  * Launch a modal.
  * @param {HTMLElement} element - The element within the modal.
  * @param {Function} [closeModalCallbackFunction] - A function to set the global closeModalCallback to after any current modal has closed.
@@ -528,6 +553,16 @@ function updateBucket(oldName, name, budget) {
 function deleteBucket(name) {
     standardRequest( "DELETE", "/bucket", {
         name: name
+    }, closeModal );
+}
+
+/**
+ * Enter a bank code.
+ * @param {string} code - The bank code.
+ */
+function enterCode(code) {
+    standardRequest( "POST", "/code", {
+        code: code
     }, closeModal );
 }
 

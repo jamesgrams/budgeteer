@@ -33,6 +33,7 @@ const FAILURE = "failure";
 
 let database;
 let monthKey;
+let bankCode;
 
 /**{
     "months": {
@@ -113,6 +114,13 @@ app.delete("/bucket", (request, response) => {
     writeActionResponse(response, responseVal);
 });
 
+// Post a code for the bank
+app.post("/code", (request, response) => {
+    console.log("app serving /code (POST)");
+    let responseVal = postCode(request.body.code);
+    writeActionResponse(response, responseVal);
+});
+
 /**
  * Write a standard response for when an action is taken.
  * @param {Response} response - The response object.
@@ -189,6 +197,7 @@ async function fetchExpenses() {
         await page.click("button[ng-click=\"submitFunction('SMS')\"]");
         await page.waitForSelector("input[name='challengeCode']");
         let promise = new Promise((resolve, reject) => { // get their text code
+            bankCode = null;
 
             let rl = readline.createInterface({
                 input: process.stdin,
@@ -199,11 +208,20 @@ async function fetchExpenses() {
                 resolve(answer);
             });
 
+            let interval = setInterval( () => {
+                if( bankCode ) { // bank code entered via web input
+                    clearInterval(interval);
+                    rl.close();
+                    resolve(bankCode);
+                }
+            }, 500);
+
         })
         let challengeCode = await promise;
         await page.type("input[name='challengeCode']", challengeCode);
         await page.keyboard.press("Enter"); // submit
         await page.waitForSelector('[ng-click="selectAccount(account)"]');
+        await page.waitForTimeout(3000);
     }
     catch(err) {
         // ok - already verified
@@ -270,6 +288,16 @@ async function fetchExpenses() {
     await browser.close();
     console.log("browser closed");
     return Promise.resolve();
+}
+
+/**
+ * Set the code for the bank.
+ * @param {string} code - The bank code.
+ * @returns {boolean} false. 
+ */
+function postCode( code ) {
+    bankCode = code;
+    return false;
 }
 
 /**

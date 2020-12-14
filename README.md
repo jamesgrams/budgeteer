@@ -14,6 +14,6 @@ Budgeteer is a pirate-themed budgeting program designed to be run on your local 
 4. `npm install`
 5. Set the environment variables, `BUDGETEER_USERNAME` and `BUDGETEER_PASSWORD` to your TD Bank credentials.
 6. Run `npm start`.
-7. On the first time running, you may have to enter a code from a text message you receive for security, so keep an eye out for console prompts.
+7. On the first time running, you may have to enter a code from a text message you receive for security, so keep an eye out for console prompts. You can also enter this code by clicking `Enter a code` in the GUI.
 8. Optionally setup your computer up to run this program on startup and save the environment variables permanently.
 9. Access the program by going to the computer you set it up on's IP and port 8001 (e.g. http://192.168.1.44:8001). You can drag the Doubloons into the chests, and click a chest to see and edits details.
